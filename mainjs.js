@@ -1,0 +1,85 @@
+var typed= new Typed(".text", {
+	strings:["Full Stack Developer","Java Developer","Web Developer"],
+	typeSpeed:100,
+	backSpeed:100,
+	backDelay:1000,
+	loop:true
+});
+var typed= new Typed(".role", {
+	strings:["Full Stack Developer","Java Developer","Web Developer"],
+	typeSpeed:100,
+	backSpeed:100,
+	backDelay:1000,
+	loop:true
+});
+
+
+let menuIcon = document.querySelector('#menu-icon');
+let navbar = document.querySelector('.navbar');
+
+menuIcon.onclick = () => {
+    menuIcon.classList.toggle('bx-x'); 
+    navbar.classList.toggle('active');
+};
+
+let sections = document.querySelectorAll('section');
+let navLinks = document.querySelectorAll('header nav a');
+
+window.onscroll = () => {
+    sections.forEach(sec => {
+        let top = window.scrollY;
+        let offset = sec.offsetTop - 100;
+        let height = sec.offsetHeight;
+        let id = sec.getAttribute('id');
+
+        if (top >= offset && top < offset + height) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
+            });
+        }
+    });
+
+    let header = document.querySelector('header');
+    header.classList.toggle('sticky', window.scrollY > 100);
+
+    menuIcon.classList.remove('bx-x'); 
+    navbar.classList.remove('active');
+};
+
+
+
+const form = document.querySelector("form");
+const fullname = document.getElementById("fname");
+const email = document.getElementById("fmail");
+const phone = document.getElementById("fnumber");
+const sub = document.getElementById("fsubject");
+const mess = document.getElementById("fmessage");
+
+function sendEmail() {
+	const bodyMessage = email.value;
+	Email.send({
+		Host : "smtp.elasticemail.com",
+		Username : "akarun1527@gmail.com",
+		Password : "24A134DCCC2C305D8377D7D356B3187FE50E",
+		To : 'akarun1527@gmail.com',
+		From : "akarun1527@gmail.com",
+		Subject : sub.value,
+		Body : bodyMessage
+	}).then(
+	  message => {
+		  if(message == "OK"){
+			  Swal.fire({
+				title: "Success!",
+				text: "Message sent Successfully!",
+				icon: "OK"
+			});
+		  }
+	  }
+	);
+}
+form.addEventListener("submit", (e) => {
+	e.preventDefault();
+	
+	sendEmail();
+})
